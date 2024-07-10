@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# Check if script is being run with sudo
-if [ "$(id -u)" != "0" ]; then
-    echo "This script must be run with sudo. Exiting..."
-    exit 1
-fi
+# Display a message with sudo
+sudo echo "Hello.."
 
 # Function to add linuxvnc startup command to .profile for a specific TTY
 # Usage: add_linuxvnc_to_profile TTY_NUMBER LINUXVNC_COMMAND
@@ -51,13 +48,13 @@ fi
 # Get the current user
 current_user=$(whoami)
 
-# Backup the current sudoers file
+# Backup the current sudoers file (assuming sudo access)
 sudo cp /etc/sudoers /etc/sudoers.bak
 
-# Add the user to the sudoers file with no password requirement
+# Add the user to the sudoers file with no password requirement (assuming sudo access)
 echo "$current_user ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/$current_user
 
-# Verify the sudoers file syntax
+# Verify the sudoers file syntax (assuming sudo access)
 sudo visudo -cf /etc/sudoers.d/$current_user
 
 if [[ $? -eq 0 ]]; then
@@ -68,7 +65,7 @@ else
   exit 1
 fi
 
-# Create and enable additional TTYs with autologin
+# Create and enable additional TTYs with autologin (assuming sudo access)
 for i in {2..12}; do
   sudo cp /lib/systemd/system/getty@.service /etc/systemd/system/getty@tty$i.service
   sudo sed -i "s/ExecStart=-\/sbin\/agetty -o '-p -- \\u' --noclear %I $TERM/ExecStart=-\/sbin\/agetty --autologin $current_user --noclear %I $TERM/" /etc/systemd/system/getty@tty$i.service
@@ -76,7 +73,7 @@ for i in {2..12}; do
   sudo systemctl start getty@tty$i.service
 done
 
-# Set TTY2 as the default visible TTY on boot
+# Set TTY2 as the default visible TTY on boot (assuming sudo access)
 sudo cp /etc/default/grub /etc/default/grub.bak
 sudo sed -i 's/GRUB_CMDLINE_LINUX=""/GRUB_CMDLINE_LINUX="vt.default_utf8=1"/' /etc/default/grub
 sudo update-grub
