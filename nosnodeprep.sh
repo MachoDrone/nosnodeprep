@@ -32,12 +32,10 @@ add_linuxvnc_to_profile() {
     fi
 }
 
-# Get the Ubuntu version
-version=$(lsb_release -r | awk '{print $2}')
-os_description=$(lsb_release -d | awk -F'\t' '{print $2}')
-
 # Show the OS version and ask for confirmation
-echo "You are running $os_description (version $version)."
+os_description=$(lsb_release -d | awk -F'\t' '{print $2}')
+echo "You are running $os_description."
+
 read -p "Are you sure you want to run this script? (y/n) " choice
 
 if [[ "$choice" != "y" && "$choice" != "Y" ]]; then
