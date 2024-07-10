@@ -70,7 +70,7 @@ sudo chmod +x /etc/init.d/switch-to-tty2
 sudo update-rc.d switch-to-tty2 defaults
 
 # Add linuxvnc startup command to .profile for TTY3
-add_linuxvnc_to_profile 3 "linuxvnc 3 -rfbport 5903"
+add_linuxvnc_to_profile 6 "linuxvnc 3 -rfbport 5903"
 
 # Add linuxvnc startup command to .profile for TTY7
 add_linuxvnc_to_profile 7 "linuxvnc 1 -rfbport 5901"
