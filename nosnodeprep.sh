@@ -32,17 +32,6 @@ add_linuxvnc_to_profile() {
     fi
 }
 
-# Show the OS version and ask for confirmation
-os_description=$(lsb_release -d | awk -F'\t' '{print $2}')
-echo "You are running $os_description."
-
-read -p "Are you sure you want to run this script? (y/n) " choice
-
-if [[ "$choice" != "y" && "$choice" != "Y" ]]; then
-  echo "Script execution canceled."
-  exit 1
-fi
-
 # Get the current user
 current_user=$(whoami)
 
